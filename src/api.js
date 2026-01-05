@@ -8,7 +8,6 @@ export const API = axios.create({
 export const getStudents = () => API.get("/students");
 export const addStudent = (student) => API.post("/students", student);
 export const deleteStudent = (id) => API.delete(`/students/${id}`);
-export const updateStudent = (id, student) =>
-  API.put(`/students/${id}`, student);
+export const updateStudent = (id, student) => API.put(`/students/${id}`, student);
 
 
