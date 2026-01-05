@@ -10,4 +10,5 @@ export const addStudent = (student) => API.post("/students", student);
 export const deleteStudent = (id) => API.delete(`/students/${id}`);
 export const updateStudent = (id, student) => API.put(`/students/${id}`, student);
 
+console.log("API URL =>", import.meta.env.VITE_API_URL);
 
