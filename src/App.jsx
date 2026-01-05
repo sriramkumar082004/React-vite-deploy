@@ -1,32 +1,33 @@
 import { useEffect, useState } from "react";
+import { getStudents } from "./api";
 
 function App() {
   const [students, setStudents] = useState([]);
-  const API = import.meta.env.VITE_API_URL;
+  const [error, setError] = useState("");
 
   useEffect(() => {
-    if (!API) {
-      console.error("API URL missing");
-      return;
-    }
-
-    fetch(`${API}/students`)
-      .then(res => {
-        if (!res.ok) throw new Error("API error");
-        return res.json();
+    getStudents()
+      .then((res) => {
+        setStudents(res.data);
       })
-      .then(data => setStudents(data))
-      .catch(err => console.error(err));
-  }, [API]);
+      .catch((err) => {
+        console.error(err);
+        setError("Failed to load students");
+      });
+  }, []);
 
   return (
     <div style={{ padding: 20 }}>
       <h2>Student List</h2>
 
-      {students.length === 0 && <p>No students found</p>}
+      {error && <p style={{ color: "red" }}>{error}</p>}
+
+      {students.length === 0 && !error && (
+        <p>No students found</p>
+      )}
 
       <ul>
-        {students.map(s => (
+        {students.map((s) => (
           <li key={s.id}>
             {s.name} - {s.age}
           </li>
