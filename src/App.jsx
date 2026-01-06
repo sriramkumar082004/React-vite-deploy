@@ -12,6 +12,7 @@ function App() {
   const fetchStudents = () => {
     getStudents()
       .then((res) => {
+        console.log("Fetch result:", res.data); // Debugging
         if (Array.isArray(res.data)) {
           setStudents(res.data);
           setError("");
@@ -74,25 +75,39 @@ function App() {
         <p>No students found</p>
       )}
 
-      <ul>
-        {students.map((s) => (
-          <li key={s.id} style={{ marginBottom: 10 }}>
-            {s.name} - {s.age} - {s.email}
-            <button 
-                onClick={() => handleEdit(s)} 
-                style={{ marginLeft: 10, marginRight: 5 }}
-            >
-                Edit
-            </button>
-            <button 
-                onClick={() => handleDelete(s.id)}
-                style={{ backgroundColor: "#ffcccc" }}
-            >
-                Delete
-            </button>
-          </li>
-        ))}
-      </ul>
+      <table style={{ width: "100%", borderCollapse: "collapse", marginTop: 20 }}>
+        <thead>
+          <tr style={{ backgroundColor: "#f2f2f2", color: "#333" }}>
+            <th style={{ padding: 10, border: "1px solid #ddd" }}>Name</th>
+            <th style={{ padding: 10, border: "1px solid #ddd" }}>Age</th>
+            <th style={{ padding: 10, border: "1px solid #ddd" }}>Email</th>
+            <th style={{ padding: 10, border: "1px solid #ddd" }}>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {students.map((s) => (
+            <tr key={s.id}>
+              <td style={{ padding: 10, border: "1px solid #ddd" }}>{s.name}</td>
+              <td style={{ padding: 10, border: "1px solid #ddd" }}>{s.age}</td>
+              <td style={{ padding: 10, border: "1px solid #ddd" }}>{s.email}</td>
+              <td style={{ padding: 10, border: "1px solid #ddd", textAlign: "center" }}>
+                <button 
+                    onClick={() => handleEdit(s)} 
+                    style={{ marginRight: 10, padding: "5px 10px", cursor: "pointer" }}
+                >
+                    Edit
+                </button>
+                <button 
+                    onClick={() => handleDelete(s.id)}
+                    style={{ backgroundColor: "#ff4d4d", color: "white", padding: "5px 10px", border: "none", cursor: "pointer" }}
+                >
+                    Delete
+                </button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 }
