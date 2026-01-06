@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import "./app.css";
+import "./App.css";
 import { getStudents, deleteStudent } from "./api"; // Added deleteStudent import
 
 import StudentForm from "./components/StudentForm";
