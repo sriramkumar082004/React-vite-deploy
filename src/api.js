@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = (import.meta.env.VITE_API_URL || "https://fast-api-server-bi71.onrender.com").replace(/\/$/, "");
+const BASE_URL = (import.meta.env.VITE_API_URL || "http://127.0.0.1:8000").replace(/\/$/, "");
 
 if (!BASE_URL) {
   console.error("❌ VITE_API_URL is missing");
