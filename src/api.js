@@ -8,11 +8,30 @@ if (!BASE_URL) {
 
 console.log("API URL =>", BASE_URL);
 
-export const getStudents = () => axios.get(`${BASE_URL}/students`);
+const API = axios.create({
+  baseURL: BASE_URL,
+});
 
-export const addStudent = (student) => axios.post(`${BASE_URL}/students`, student);
+API.interceptors.request.use((req) => {
+  const token = localStorage.getItem("token");
+  if (token) req.headers.Authorization = `Bearer ${token}`;
+  return req;
+});
 
-export const deleteStudent = (id) => axios.delete(`${BASE_URL}/students/${id}`);
+export const getStudents = () => API.get("/students");
 
-export const updateStudent = (id, student) =>
-  axios.put(`${BASE_URL}/students/${id}`, student);
+export const addStudent = (student) => API.post("/students", student);
+
+export const deleteStudent = (id) => API.delete(`/students/${id}`);
+
+export const updateStudent = (id, student) => API.put(`/students/${id}`, student);
+
+// Auth Functions
+export const login = (credentials) => API.post("/login", credentials);
+
+export const register = (credentials) => API.post("/register", credentials);
+
+export default API;
+
+
+
