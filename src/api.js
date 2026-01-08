@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const BASE_URL = (import.meta.env.VITE_API_URL || "http://127.0.0.1:8000").replace(/\/$/, "");
+const BASE_URL = (import.meta.env.VITE_API_URL || "http://localhost:8000").replace(/\/$/, "");
 
 if (!BASE_URL) {
   console.error("❌ VITE_API_URL is missing");
@@ -8,30 +8,43 @@ if (!BASE_URL) {
 
 console.log("API URL =>", BASE_URL);
 
-const API = axios.create({
+const api = axios.create({
   baseURL: BASE_URL,
 });
 
-API.interceptors.request.use((req) => {
+api.interceptors.request.use((req) => {
   const token = localStorage.getItem("token");
-  if (token) req.headers.Authorization = `Bearer ${token}`;
+  if (token) {
+    req.headers.Authorization = `Bearer ${token}`; 
+  }
   return req;
 });
 
-export const getStudents = () => API.get("/students");
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response && error.response.status === 401) {
+      localStorage.removeItem("token");
+      window.location.href = "/login";
+    }
+    return Promise.reject(error);
+  }
+);
 
-export const addStudent = (student) => API.post("/students", student);
+export const getStudents = () => api.get("/students");
 
-export const deleteStudent = (id) => API.delete(`/students/${id}`);
+export const addStudent = (student) => api.post("/students", student);
 
-export const updateStudent = (id, student) => API.put(`/students/${id}`, student);
+export const deleteStudent = (id) => api.delete(`/students/${id}`);
+
+export const updateStudent = (id, student) => api.put(`/students/${id}`, student);
 
 // Auth Functions
-export const login = (credentials) => API.post("/login", credentials);
+export const login = (credentials) => api.post("/login", credentials);
 
-export const register = (credentials) => API.post("/register", credentials);
+export const register = (credentials) => api.post("/register", credentials);
 
-export default API;
+export default api;
 
 
 

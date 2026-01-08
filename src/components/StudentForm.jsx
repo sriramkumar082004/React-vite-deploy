@@ -4,31 +4,31 @@ import { addStudent, updateStudent } from "../api";
 function StudentForm({ onStudentAdded, currentStudent, onCancelEdit }) {
   const [name, setName] = useState("");
   const [age, setAge] = useState("");
-  const [email, setEmail] = useState("");
+  const [course, setCourse] = useState("");
   const [error, setError] = useState("");
 
   useEffect(() => {
     if (currentStudent) {
         setName(currentStudent.name);
         setAge(currentStudent.age);
-        setEmail(currentStudent.email);
+        setCourse(currentStudent.course);
     } else {
         setName("");
         setAge("");
-        setEmail("");
+        setCourse("");
     }
   }, [currentStudent]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!name || !age || !email) {
+    if (!name || !age || !course) {
         setError("Please fill in all fields");
         return;
     }
     setError("");
 
     if (currentStudent) {
-        updateStudent(currentStudent.id, { name, age: parseInt(age), email })
+        updateStudent(currentStudent.id, { name, age: parseInt(age), course })
             .then(() => {
                 onStudentAdded(); // Reuse to refresh list
             })
@@ -37,11 +37,11 @@ function StudentForm({ onStudentAdded, currentStudent, onCancelEdit }) {
                 setError("Failed to update student");
             });
     } else {
-        addStudent({ name, age: parseInt(age), email })
+        addStudent({ name, age: parseInt(age), course })
             .then(() => {
                 setName("");
                 setAge("");
-                setEmail("");
+                setCourse("");
                 if (onStudentAdded) onStudentAdded();
             })
             .catch((err) => {
@@ -73,11 +73,11 @@ function StudentForm({ onStudentAdded, currentStudent, onCancelEdit }) {
           />
         </div>
         <div>
-          <label>Email: </label>
+          <label>Course: </label>
           <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            type="text"
+            value={course}
+            onChange={(e) => setCourse(e.target.value)}
           />
         </div>
         <button type="submit" style={{ marginTop: 10 }}>

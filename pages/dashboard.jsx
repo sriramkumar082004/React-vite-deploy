@@ -60,6 +60,8 @@ function Dashboard() {
     window.location.href = "/login";
   };
 
+
+
   return (
     <div style={{ padding: 20 }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
@@ -86,7 +88,7 @@ function Dashboard() {
           <tr style={{ backgroundColor: "#f2f2f2", color: "#333" }}>
             <th style={{ padding: 10, border: "1px solid #ddd" }}>Name</th>
             <th style={{ padding: 10, border: "1px solid #ddd" }}>Age</th>
-            <th style={{ padding: 10, border: "1px solid #ddd" }}>Email</th>
+            <th style={{ padding: 10, border: "1px solid #ddd" }}>Course</th>
             <th style={{ padding: 10, border: "1px solid #ddd" }}>Actions</th>
           </tr>
         </thead>
@@ -95,7 +97,7 @@ function Dashboard() {
             <tr key={s.id}>
               <td style={{ padding: 10, border: "1px solid #ddd" }}>{s.name}</td>
               <td style={{ padding: 10, border: "1px solid #ddd" }}>{s.age}</td>
-              <td style={{ padding: 10, border: "1px solid #ddd" }}>{s.email}</td>
+              <td style={{ padding: 10, border: "1px solid #ddd" }}>{s.course}</td>
               <td style={{ padding: 10, border: "1px solid #ddd", textAlign: "center" }}>
                 <button 
                     onClick={() => handleEdit(s)} 

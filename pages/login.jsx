@@ -6,8 +6,13 @@ export default function Login() {
   const [password, setPassword] = useState("");
 
   const handleLogin = async () => {
+    if (!email || !password) {
+      alert("Please enter both email and password.");
+      return;
+    }
     try {
       const res = await login({ email, password });
+      console.log("Login Response:", res.data); // Debugging
       localStorage.setItem("token", res.data.access_token);
       window.location.href = "/dashboard";
     } catch (error) {
