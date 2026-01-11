@@ -1,0 +1,5 @@
+/* 
+  Styles are now handled by Tailwind CSS classes in individual components.
+  This file is kept empty to avoid build errors if imported, 
+  but imports should eventually be removed.
+*/
