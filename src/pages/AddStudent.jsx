@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { addStudent, updateStudent, getStudents } from "../services/api";
-import { UserPlusIcon, UserIcon, AcademicCapIcon, CalendarIcon, PencilSquareIcon } from "@heroicons/react/24/outline";
+import { addStudent, updateStudent, getStudents, deleteStudent } from "../services/api";
+import { UserPlusIcon, UserIcon, AcademicCapIcon, CalendarIcon, PencilSquareIcon, TrashIcon } from "@heroicons/react/24/outline";
 
 function AddStudent() {
   const navigate = useNavigate();
@@ -13,6 +13,20 @@ function AddStudent() {
   });
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState({ type: "", text: "" });
+  const [students, setStudents] = useState([]);
+
+  useEffect(() => {
+    fetchStudents();
+  }, []);
+
+  const fetchStudents = async () => {
+    try {
+      const res = await getStudents();
+      setStudents(res.data);
+    } catch (err) {
+      console.error("Error fetching students:", err);
+    }
+  };
 
   useEffect(() => {
     if (id) {
@@ -23,14 +37,30 @@ function AddStudent() {
   const fetchStudent = async () => {
       try {
           const res = await getStudents();
-          const student = res.data.find(s => (s._id || s.id) === id);
+          // Convert IDs to string for comparison to avoid type mismatches
+          const student = res.data.find(s => String(s._id || s.id) === String(id));
           if (student) {
               setFormData({ name: student.name, age: student.age, course: student.course });
+          } else {
+            console.warn("Student not found for ID:", id);
           }
       } catch (err) {
           console.error("Error fetching student:", err);
           setMessage({ type: "error", text: "Failed to fetch student details" });
       }
+  };
+
+  const handleDelete = async (studentId) => {
+    if (window.confirm("Are you sure you want to delete this student?")) {
+        try {
+            await deleteStudent(studentId);
+            setStudents(students.filter(student => (student._id || student.id) !== studentId));
+            setMessage({ type: "success", text: "Student deleted successfully" });
+        } catch (err) {
+            console.error("Error deleting student:", err);
+            setMessage({ type: "error", text: "Failed to delete student" });
+        }
+    }
   };
 
   const handleChange = (e) => {
@@ -50,13 +80,15 @@ function AddStudent() {
     try {
       if (id) {
           await updateStudent(id, formData);
-          setMessage({ type: "success", text: "Student updated successfully! Redirecting..." });
+          setMessage({ type: "success", text: "Student updated successfully!" });
+          setTimeout(() => navigate('/add-student'), 1500); // clear ID
       } else {
           await addStudent(formData);
-          setMessage({ type: "success", text: "Student added successfully! Redirecting..." });
+          setMessage({ type: "success", text: "Student added successfully!" });
       }
       setFormData({ name: "", age: "", course: "" });
-      setTimeout(() => navigate('/dashboard'), 1500);
+      fetchStudents(); // Refresh list
+
     } catch (err) {
       console.error(err);
       setMessage({ type: "error", text: "Failed to add student. Please try again." });
@@ -168,6 +200,72 @@ function AddStudent() {
               )}
             </button>
           </form>
+        </div>
+
+        {/* Student List Section */}
+        <div className="mt-12 bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
+          <div className="p-6 border-b border-slate-100 flex justify-between items-center bg-slate-50/50">
+            <h2 className="text-xl font-bold text-slate-800">Registered Students</h2>
+            <button 
+                onClick={fetchStudents} 
+                className="text-sm text-indigo-600 hover:text-indigo-800 font-medium px-3 py-1.5 rounded-lg hover:bg-indigo-50 transition-colors"
+            >
+                Refresh List
+            </button>
+          </div>
+          
+          <div className="overflow-x-auto">
+            {students.length === 0 ? (
+              <div className="p-12 text-center text-slate-400">
+                No students registered yet.
+              </div>
+            ) : (
+              <table className="w-full text-left border-collapse">
+                <thead>
+                  <tr className="bg-slate-50/50 text-slate-500 text-sm uppercase tracking-wider">
+                    <th className="p-4 font-semibold rounded-tl-lg">Name</th>
+                    <th className="p-4 font-semibold">Age</th>
+                    <th className="p-4 font-semibold">Course</th>
+                    <th className="p-4 font-semibold rounded-tr-lg">Actions</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-50">
+                  {students.map((student) => (
+                    <tr key={student._id || student.id} className="hover:bg-indigo-50/30 transition-colors">
+                      <td className="p-4 font-medium text-slate-900">{student.name}</td>
+                      <td className="p-4 text-slate-600">{student.age}</td>
+                      <td className="p-4 text-slate-600">
+                        <span className="bg-indigo-50 text-indigo-700 px-2.5 py-1 rounded-md text-xs font-semibold border border-indigo-100">
+                          {student.course}
+                        </span>
+                      </td>
+                      <td className="p-4">
+                        <div className="flex gap-2">
+                          <button 
+                            onClick={() => {
+                                navigate(`/edit-student/${student._id || student.id}`);
+                                window.scrollTo({ top: 0, behavior: 'smooth' });
+                            }}
+                            className="p-2 text-indigo-600 hover:bg-indigo-50 rounded-lg transition-colors"
+                            title="Edit"
+                          >
+                            <PencilSquareIcon className="w-5 h-5" />
+                          </button>
+                          <button 
+                            onClick={() => handleDelete(student._id || student.id)}
+                            className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                            title="Delete"
+                          >
+                            <TrashIcon className="w-5 h-5" />
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            )}
+          </div>
         </div>
       </div>
     </div>
