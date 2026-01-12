@@ -19,6 +19,7 @@ function App() {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/aadhaar" element={<Aadhaar />} />
         <Route path="/add-student" element={<AddStudent />} />
+        <Route path="/edit-student/:id" element={<AddStudent />} />
       </Routes>
     </>
   );

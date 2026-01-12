@@ -1,8 +1,11 @@
-import { useState } from "react";
-import { addStudent } from "../services/api";
-import { UserPlusIcon, UserIcon, AcademicCapIcon, CalendarIcon } from "@heroicons/react/24/outline";
+import { useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { addStudent, updateStudent, getStudents } from "../services/api";
+import { UserPlusIcon, UserIcon, AcademicCapIcon, CalendarIcon, PencilSquareIcon } from "@heroicons/react/24/outline";
 
 function AddStudent() {
+  const navigate = useNavigate();
+  const { id } = useParams();
   const [formData, setFormData] = useState({
     name: "",
     age: "",
@@ -10,6 +13,25 @@ function AddStudent() {
   });
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState({ type: "", text: "" });
+
+  useEffect(() => {
+    if (id) {
+       fetchStudent();
+    }
+  }, [id]);
+
+  const fetchStudent = async () => {
+      try {
+          const res = await getStudents();
+          const student = res.data.find(s => (s._id || s.id) === id);
+          if (student) {
+              setFormData({ name: student.name, age: student.age, course: student.course });
+          }
+      } catch (err) {
+          console.error("Error fetching student:", err);
+          setMessage({ type: "error", text: "Failed to fetch student details" });
+      }
+  };
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -26,9 +48,15 @@ function AddStudent() {
     setMessage({ type: "", text: "" });
 
     try {
-      await addStudent(formData);
-      setMessage({ type: "success", text: "Student added successfully!" });
+      if (id) {
+          await updateStudent(id, formData);
+          setMessage({ type: "success", text: "Student updated successfully! Redirecting..." });
+      } else {
+          await addStudent(formData);
+          setMessage({ type: "success", text: "Student added successfully! Redirecting..." });
+      }
       setFormData({ name: "", age: "", course: "" });
+      setTimeout(() => navigate('/dashboard'), 1500);
     } catch (err) {
       console.error(err);
       setMessage({ type: "error", text: "Failed to add student. Please try again." });
@@ -42,10 +70,10 @@ function AddStudent() {
       <div className="max-w-xl mx-auto">
         <div className="text-center space-y-2 mb-8">
           <h1 className="text-3xl font-bold bg-linear-to-r from-indigo-600 to-violet-600 bg-clip-text text-transparent">
-            Add New Student
+            {id ? "Edit Student" : "Add New Student"}
           </h1>
           <p className="text-slate-500">
-            Enter student details to register them in the system
+            {id ? "Update student details" : "Enter student details to register them in the system"}
           </p>
         </div>
 
@@ -134,8 +162,8 @@ function AddStudent() {
                 </>
               ) : (
                 <>
-                  <UserPlusIcon className="w-5 h-5" />
-                  Add Student
+                  {id ? <PencilSquareIcon className="w-5 h-5" /> : <UserPlusIcon className="w-5 h-5" />}
+                  {id ? "Update Student" : "Add Student"}
                 </>
               )}
             </button>

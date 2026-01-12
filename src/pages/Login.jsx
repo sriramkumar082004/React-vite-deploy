@@ -1,26 +1,38 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
-import { loginUser } from "../services/api";
+import { loginUser, wakeUpServer } from "../services/api";
 import { LockClosedIcon } from "@heroicons/react/24/solid";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [isWakingUp, setIsWakingUp] = useState(false);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    // Wake up server immediately when page loads
+    wakeUpServer().catch(() => {
+      // Ignore errors, just trying to wake it up
+    });
+  }, []);
 
   const handleLogin = async (e) => {
     e.preventDefault();
     setLoading(true);
-    const toastId = toast.loading("Logging in... Please wait");
+    // Show "Waking up" message if it takes more than 2 seconds
+    const wakeUpTimer = setTimeout(() => setIsWakingUp(true), 2000);
+    const toastId = toast.loading("Logging in...");
 
     try {
       const res = await loginUser({ email, password });
+      clearTimeout(wakeUpTimer);
       localStorage.setItem("token", res.data.access_token);
       toast.success("Login Successful!", { id: toastId });
       navigate('/dashboard');
     } catch (error) {
+      clearTimeout(wakeUpTimer);
       console.error("Login Error:", error);
       if (error.response && (error.response.status === 401 || error.response.status === 400)) {
         toast.error("Incorrect password. Please enter the valid password.", { id: toastId });
@@ -31,6 +43,7 @@ function Login() {
       }
     } finally {
       setLoading(false);
+      setIsWakingUp(false);
     }
   };
 

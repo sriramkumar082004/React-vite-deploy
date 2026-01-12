@@ -38,4 +38,16 @@ export const extractAadhaar = (formData) => api.post('/extract-aadhaar', formDat
 // Add new student
 export const addStudent = (studentData) => api.post('/students', studentData);
 
+// Get all students
+export const getStudents = () => api.get('/students');
+
+// Delete student
+export const deleteStudent = (id) => api.delete(`/students/${id}`);
+
+// Update student
+export const updateStudent = (id, studentData) => api.put(`/students/${id}`, studentData);
+
+// Wake up server (prevent cold start)
+export const wakeUpServer = () => api.get('/');
+
 export default api;
