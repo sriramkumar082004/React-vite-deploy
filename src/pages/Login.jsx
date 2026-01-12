@@ -13,18 +13,21 @@ function Login() {
   const handleLogin = async (e) => {
     e.preventDefault();
     setLoading(true);
+    const toastId = toast.loading("Logging in... Please wait");
+
     try {
       const res = await loginUser({ email, password });
       localStorage.setItem("token", res.data.access_token);
+      toast.success("Login Successful!", { id: toastId });
       navigate('/dashboard');
     } catch (error) {
       console.error("Login Error:", error);
       if (error.response && (error.response.status === 401 || error.response.status === 400)) {
-        toast.error("Incorrect password. Please enter the valid password.");
+        toast.error("Incorrect password. Please enter the valid password.", { id: toastId });
       } else if (error.response && error.response.status === 404) {
-        toast.error("Account not found. Please register.");
+        toast.error("Account not found. Please register.", { id: toastId });
       } else {
-        toast.error("Invalid credentials or server error");
+        toast.error(`Login failed: ${error.response?.data?.detail || error.message || "Unknown error"}`, { id: toastId });
       }
     } finally {
       setLoading(false);
@@ -38,7 +41,7 @@ function Login() {
           <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center mb-4">
             <LockClosedIcon className="w-6 h-6 text-white" />
           </div>
-          <h2 className="text-3xl font-bold text-white tracking-tight">Welcome Back</h2>
+          
           <p className="text-white/70 text-sm mt-2">Sign in to continue to your dashboard</p>
         </div>
 

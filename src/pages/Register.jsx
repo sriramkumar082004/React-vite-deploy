@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { registerUser } from "../services/api";
 import { UserPlusIcon } from "@heroicons/react/24/solid";
+import { toast } from "react-hot-toast";
 
 function Register() {
   const [email, setEmail] = useState("");
@@ -17,18 +18,23 @@ function Register() {
 
     if (password !== confirmPassword) {
       setError("Passwords do not match");
+      toast.error("Passwords do not match");
       return;
     }
 
     setLoading(true);
+    const toastId = toast.loading("Creating account...");
     try {
       await registerUser({ email, password });
-      alert("Registration successful! Please login.");
+      toast.success("Registration successful! Please login.", { id: toastId });
       navigate("/");
     } catch (err) {
       console.error("Registration Error:", err);
       const msg = err.response?.data?.detail || "Registration failed. Try again.";
-      setError(Array.isArray(msg) ? msg[0].msg : msg);
+      const errorMsg = Array.isArray(msg) ? msg[0].msg : msg;
+      
+      setError(errorMsg);
+      toast.error(errorMsg, { id: toastId });
     } finally {
       setLoading(false);
     }
