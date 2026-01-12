@@ -23,7 +23,7 @@ const Dashboard = () => {
               </div>
               <h2 className="text-2xl font-bold text-gray-900 mb-3">Aadhaar Extraction</h2>
               <p className="text-gray-500 leading-relaxed">
-                Scan and extract details from Aadhaar cards automatically.
+                Scan and extract details from Aadhaar.
               </p>
             </div>
           </div>
