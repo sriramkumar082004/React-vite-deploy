@@ -44,7 +44,7 @@ function Aadhaar() {
             Aadhaar Extraction
           </h1>
           <p className="text-slate-500">
-            Upload an Aadhaar card image to automatically extract details
+            Upload an Aadhaar card image to extract details
           </p>
         </div>
 
