@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { IdentificationIcon, UserPlusIcon } from '@heroicons/react/24/outline';
+import { IdentificationIcon, UserPlusIcon, PhotoIcon } from '@heroicons/react/24/outline';
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -30,6 +30,7 @@ const Dashboard = () => {
             </div>
           </div>
 
+          
           {/* Add Student Card */}
           <div 
             onClick={() => navigate('/add-student')}
@@ -42,6 +43,22 @@ const Dashboard = () => {
               <h2 className="text-2xl font-bold text-gray-900 mb-3">Manage Students</h2>
               <p className="text-gray-500 leading-relaxed">
                 Add, Edit, View, or Delete students.
+              </p>
+            </div>
+          </div>
+
+          {/* Image Background Changer Card */}
+          <div 
+            onClick={() => navigate('/change-background')}
+            className="group bg-white rounded-2xl p-8 shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer border border-gray-100 hover:border-purple-500/30 transform hover:-translate-y-1"
+          >
+            <div className="flex flex-col items-center text-center">
+              <div className="w-16 h-16 bg-purple-50 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-purple-600 transition-colors duration-300">
+                <PhotoIcon className="w-8 h-8 text-purple-600 group-hover:text-white transition-colors duration-300" />
+              </div>
+              <h2 className="text-2xl font-bold text-gray-900 mb-3">Change Background</h2>
+              <p className="text-gray-500 leading-relaxed">
+                Change image background using External API.
               </p>
             </div>
           </div>

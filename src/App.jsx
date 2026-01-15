@@ -5,9 +5,12 @@ import Register from './pages/Register';
 import Aadhaar from './pages/Aadhaar';
 import AddStudent from './pages/AddStudent';
 import Dashboard from './pages/Dashboard';
+
 import './App.css';
 
 import { Toaster } from 'react-hot-toast';
+
+import ImageBackground from './pages/ImageBackground';
 
 function App() {
   return (
@@ -20,6 +23,7 @@ function App() {
         <Route path="/aadhaar" element={<Aadhaar />} />
         <Route path="/add-student" element={<AddStudent />} />
         <Route path="/edit-student/:id" element={<AddStudent />} />
+        <Route path="/change-background" element={<ImageBackground />} />
       </Routes>
     </>
   );

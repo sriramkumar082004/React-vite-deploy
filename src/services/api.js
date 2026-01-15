@@ -35,6 +35,8 @@ export const extractAadhaar = (formData) => api.post('/extract-aadhaar', formDat
     headers: { 'Content-Type': 'multipart/form-data' }
 });
 
+
+
 // Add new student
 export const addStudent = (studentData) => api.post('/students', studentData);
 
