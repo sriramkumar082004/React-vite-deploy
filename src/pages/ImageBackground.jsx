@@ -229,14 +229,6 @@ const ImageBackground = () => {
                          {processedImage ? (
                             <div className="relative w-full h-full">
                                 <img src={processedImage} alt="Processed" className="w-full h-full object-contain" />
-                                <a 
-                                    href={processedImage} 
-                                    download="processed-image.png"
-                                    className="absolute bottom-4 right-4 bg-white/90 p-2 rounded-full shadow hover:bg-white text-indigo-600 transition-all"
-                                    title="Download Image"
-                                >
-                                    <CloudArrowDownIcon className="w-6 h-6" />
-                                </a>
                             </div>
                         ) : (
                             <div className="text-gray-400 text-center p-4">
@@ -254,6 +246,18 @@ const ImageBackground = () => {
                             </div>
                         )}
                     </div>
+                    {processedImage && (
+                        <div className="flex justify-center mt-2">
+                            <a 
+                                href={processedImage} 
+                                download="processed-image.png" 
+                                className="px-8 py-2.5 rounded-xl font-bold text-white bg-indigo-600 hover:bg-indigo-700 shadow-lg shadow-indigo-200 flex items-center justify-center gap-2 transition-all transform active:scale-95"
+                            >
+                                <CloudArrowDownIcon className="w-5 h-5" />
+                                Download Image
+                            </a>
+                        </div>
+                    )}
                 </div>
             </div>
         </div>
