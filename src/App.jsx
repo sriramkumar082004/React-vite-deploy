@@ -1,5 +1,6 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
+import Navbar from './components/Navbar';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Aadhaar from './pages/Aadhaar';
@@ -9,13 +10,13 @@ import Dashboard from './pages/Dashboard';
 import './App.css';
 
 import { Toaster } from 'react-hot-toast';
-
 import ImageBackground from './pages/ImageBackground';
 
 function App() {
   return (
     <>
       <Toaster position="top-right" toastOptions={{ duration: 4000 }} />
+      <Navbar />
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/register" element={<Register />} />

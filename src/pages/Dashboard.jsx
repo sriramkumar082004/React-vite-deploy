@@ -6,7 +6,7 @@ const Dashboard = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col items-center p-4 md:p-6 pt-20">
+    <div className="min-h-screen bg-gray-50 flex flex-col items-center p-4 md:p-6 pt-8">
       <div className="max-w-4xl w-full space-y-12">
         <div className="text-center">
           <h1 className="text-4xl font-bold bg-linear-to-r from-indigo-600 to-pink-600 bg-clip-text text-transparent mb-2">Dashboard</h1>
@@ -23,9 +23,9 @@ const Dashboard = () => {
               <div className="w-16 h-16 bg-indigo-50 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-indigo-600 transition-colors duration-300">
                 <IdentificationIcon className="w-8 h-8 text-indigo-600 group-hover:text-white transition-colors duration-300" />
               </div>
-              <h2 className="text-2xl font-bold text-gray-900 mb-3">Aadhaar Extraction</h2>
+              <h2 className="text-2xl font-bold text-gray-900 mb-6">Aadhaar Extraction</h2>
               <p className="text-gray-500 leading-relaxed">
-                Scan and extract details from Aadhaar.
+                Upload an Aadhaar card image to extract details.
               </p>
             </div>
           </div>
@@ -40,7 +40,7 @@ const Dashboard = () => {
               <div className="w-16 h-16 bg-pink-50 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-pink-600 transition-colors duration-300">
                 <UserPlusIcon className="w-8 h-8 text-pink-600 group-hover:text-white transition-colors duration-300" />
               </div>
-              <h2 className="text-2xl font-bold text-gray-900 mb-3">Manage Students</h2>
+              <h2 className="text-2xl font-bold text-gray-900 mb-6">Manage Students</h2>
               <p className="text-gray-500 leading-relaxed">
                 Add, Edit, View, or Delete students.
               </p>
@@ -56,9 +56,9 @@ const Dashboard = () => {
               <div className="w-16 h-16 bg-purple-50 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-purple-600 transition-colors duration-300">
                 <PhotoIcon className="w-8 h-8 text-purple-600 group-hover:text-white transition-colors duration-300" />
               </div>
-              <h2 className="text-2xl font-bold text-gray-900 mb-3">Change Background</h2>
+              <h2 className="text-2xl font-bold text-gray-900 mb-6">Remove Background</h2>
               <p className="text-gray-500 leading-relaxed">
-                Change image background using External API.
+                Upload an image to remove or change the background.
               </p>
             </div>
           </div>

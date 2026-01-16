@@ -1,8 +1,10 @@
+import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { extractAadhaar } from "../services/api";
 import { ArrowUpTrayIcon, DocumentTextIcon } from "@heroicons/react/24/outline";
 
 function Aadhaar() {
+  const navigate = useNavigate();
   const [file, setFile] = useState(null);
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState(null);
@@ -37,7 +39,7 @@ function Aadhaar() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 p-4 md:p-8 pt-20">
+    <div className="min-h-screen bg-slate-50 p-4 md:p-8 pt-8 relative">
       <div className="max-w-4xl mx-auto space-y-8">
         <div className="text-center space-y-2">
           <h1 className="text-3xl font-bold bg-linear-to-r from-indigo-600 to-violet-600 bg-clip-text text-transparent">
