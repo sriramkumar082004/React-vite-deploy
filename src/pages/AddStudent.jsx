@@ -98,7 +98,7 @@ function AddStudent() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 p-4 md:p-8 pt-20">
+    <div className="min-h-screen bg-slate-50 p-4 md:p-8 pt-8 relative">
       <div className="max-w-xl mx-auto">
         <div className="text-center space-y-2 mb-8">
           <h1 className="text-3xl font-bold bg-linear-to-r from-indigo-600 to-violet-600 bg-clip-text text-transparent">
