@@ -37,6 +37,8 @@ export const extractAadhaar = (formData) => api.post('/extract-aadhaar', formDat
 
 
 
+
+
 // Add new student
 export const addStudent = (studentData) => api.post('/students', studentData);
 

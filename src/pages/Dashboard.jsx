@@ -6,25 +6,25 @@ const Dashboard = () => {
   const navigate = useNavigate();
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col items-center p-4 md:p-6 pt-8">
+    <div className="flex flex-col items-center p-4 md:p-6">
       <div className="max-w-4xl w-full space-y-12">
         <div className="text-center">
-          <h1 className="text-4xl font-bold bg-linear-to-r from-indigo-600 to-pink-600 bg-clip-text text-transparent mb-2">Dashboard</h1>
-          <p className="text-gray-600">Select an action</p>
+          <h1 className="text-4xl font-bold bg-linear-to-r from-indigo-400 to-pink-400 bg-clip-text text-transparent mb-2">Dashboard</h1>
+          <p className="text-slate-400">Select an action</p>
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {/* Aadhaar Extraction Card */}
           <div 
             onClick={() => navigate('/aadhaar')}
-            className="group bg-white rounded-2xl p-8 shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer border border-gray-100 hover:border-indigo-500/30 transform hover:-translate-y-1"
+            className="group bg-slate-800/50 backdrop-blur-sm rounded-2xl p-8 shadow-lg hover:shadow-indigo-500/20 transition-all duration-300 cursor-pointer border border-white/5 hover:border-indigo-500/50 transform hover:-translate-y-1"
           >
             <div className="flex flex-col items-center text-center">
-              <div className="w-16 h-16 bg-indigo-50 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-indigo-600 transition-colors duration-300">
-                <IdentificationIcon className="w-8 h-8 text-indigo-600 group-hover:text-white transition-colors duration-300" />
+              <div className="w-16 h-16 bg-indigo-500/10 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-indigo-600 transition-colors duration-300">
+                <IdentificationIcon className="w-8 h-8 text-indigo-400 group-hover:text-white transition-colors duration-300" />
               </div>
-              <h2 className="text-2xl font-bold text-gray-900 mb-6">Aadhaar Extraction</h2>
-              <p className="text-gray-500 leading-relaxed">
+              <h2 className="text-2xl font-bold text-white mb-4">Aadhaar Extraction</h2>
+              <p className="text-slate-400 leading-relaxed">
                 Upload an Aadhaar card image to extract details.
               </p>
             </div>
@@ -34,35 +34,36 @@ const Dashboard = () => {
           {/* Add Student Card */}
           <div 
             onClick={() => navigate('/add-student')}
-            className="group bg-white rounded-2xl p-8 shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer border border-gray-100 hover:border-pink-500/30 transform hover:-translate-y-1"
+            className="group bg-slate-800/50 backdrop-blur-sm rounded-2xl p-8 shadow-lg hover:shadow-pink-500/20 transition-all duration-300 cursor-pointer border border-white/5 hover:border-pink-500/50 transform hover:-translate-y-1"
           >
             <div className="flex flex-col items-center text-center">
-              <div className="w-16 h-16 bg-pink-50 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-pink-600 transition-colors duration-300">
-                <UserPlusIcon className="w-8 h-8 text-pink-600 group-hover:text-white transition-colors duration-300" />
+              <div className="w-16 h-16 bg-pink-500/10 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-pink-600 transition-colors duration-300">
+                <UserPlusIcon className="w-8 h-8 text-pink-400 group-hover:text-white transition-colors duration-300" />
               </div>
-              <h2 className="text-2xl font-bold text-gray-900 mb-6">Manage Students</h2>
-              <p className="text-gray-500 leading-relaxed">
+              <h2 className="text-2xl font-bold text-white mb-4">Manage Students</h2>
+              <p className="text-slate-400 leading-relaxed">
                 Add, Edit, View, or Delete students.
               </p>
             </div>
           </div>
 
-          {/* Image Background Changer Card */}
+          {/* Image Background Card */}
           <div 
             onClick={() => navigate('/change-background')}
-            className="group bg-white rounded-2xl p-8 shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer border border-gray-100 hover:border-purple-500/30 transform hover:-translate-y-1"
+            className="group bg-slate-800/50 backdrop-blur-sm rounded-2xl p-8 shadow-lg hover:shadow-violet-500/20 transition-all duration-300 cursor-pointer border border-white/5 hover:border-violet-500/50 transform hover:-translate-y-1"
           >
             <div className="flex flex-col items-center text-center">
-              <div className="w-16 h-16 bg-purple-50 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-purple-600 transition-colors duration-300">
-                <PhotoIcon className="w-8 h-8 text-purple-600 group-hover:text-white transition-colors duration-300" />
+              <div className="w-16 h-16 bg-violet-500/10 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-violet-600 transition-colors duration-300">
+                <PhotoIcon className="w-8 h-8 text-violet-400 group-hover:text-white transition-colors duration-300" />
               </div>
-              <h2 className="text-2xl font-bold text-gray-900 mb-6">Remove Background</h2>
-              <p className="text-gray-500 leading-relaxed">
-                Upload an image to remove or change the background.
+              <h2 className="text-2xl font-bold text-white mb-4">Remove Background</h2>
+              <p className="text-slate-400 leading-relaxed">
+                Remove or replace image backgrounds instantly.
               </p>
             </div>
           </div>
         </div>
+
       </div>
     </div>
   );
