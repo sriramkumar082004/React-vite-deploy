@@ -118,7 +118,7 @@ const Navbar = () => {
 
       {/* Mobile Menu Backdrop */}
       <div 
-        className={`fixed inset-0 bg-black/60 z-[60] backdrop-blur-sm transition-opacity duration-300 ${
+        className={`fixed inset-0 bg-black/60 z-60 backdrop-blur-sm transition-opacity duration-300 ${
           isMobileMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
         }`}
         onClick={() => setIsMobileMenuOpen(false)}
@@ -126,7 +126,7 @@ const Navbar = () => {
 
       {/* Mobile Menu Drawer (Right Side) */}
       <div 
-        className={`fixed top-0 right-0 h-full w-72 bg-slate-900/95 backdrop-blur-xl border-l border-white/10 shadow-2xl z-[70] transform transition-transform duration-300 ease-in-out ${
+        className={`fixed top-0 right-0 h-full w-72 bg-slate-900/95 backdrop-blur-xl border-l border-white/10 shadow-2xl z-70 transform transition-transform duration-300 ease-in-out ${
           isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
       >

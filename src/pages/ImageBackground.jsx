@@ -12,6 +12,24 @@ const ImageBackground = () => {
   const [previewUrl, setPreviewUrl] = useState(null);
   const [processedImage, setProcessedImage] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [progress, setProgress] = useState(0);
+  
+  // Simulate progress
+  React.useEffect(() => {
+    let interval;
+    if (loading) {
+      setProgress(0);
+      interval = setInterval(() => {
+        setProgress(prev => {
+          if (prev >= 90) return prev; // Stall at 90%
+          return prev + Math.floor(Math.random() * 10) + 1;
+        });
+      }, 800);
+    } else {
+        setProgress(100);
+    }
+    return () => clearInterval(interval);
+  }, [loading]);
   
   // New state for color picker
   const [useColor, setUseColor] = useState(false);
@@ -231,17 +249,40 @@ const ImageBackground = () => {
                                 <img src={processedImage} alt="Processed" className="w-full h-full object-contain" />
                             </div>
                         ) : (
-                            <div className="text-slate-500 text-center p-4">
+                            <div className="text-slate-500 text-center p-4 w-full h-full flex items-center justify-center">
                                 {loading ? (
-                                    <div className="flex flex-col items-center animate-pulse">
-                                        <div className="w-12 h-12 bg-slate-600 rounded-full mb-2"></div>
-                                        <p>{useColor ? 'Changing background...' : 'Removing background...'}</p>
+                                    <div className="flex flex-col items-center justify-center w-full px-8 animate-in fade-in zoom-in duration-300">
+                                        <div className="relative w-20 h-20 mb-4">
+                                            <div className="absolute inset-0 border-4 border-slate-700/50 rounded-full"></div>
+                                            <div 
+                                                className="absolute inset-0 border-4 border-indigo-500 rounded-full border-t-transparent animate-spin"
+                                                style={{ animationDuration: '1.5s' }}
+                                            ></div>
+                                            <div className="absolute inset-0 flex items-center justify-center font-bold text-white text-lg">
+                                                {progress}%
+                                            </div>
+                                        </div>
+                                        <h4 className="text-xl font-bold text-white mb-2">
+                                            {useColor ? 'replacing background...' : 'Removing background...'}
+                                        </h4>
+                                        <p className="text-slate-400 text-sm max-w-[250px]">
+                                            This AI magic usually takes about 10-15 seconds. Hold tight!
+                                        </p>
+                                        
+                                        {/* Progress Bar */}
+                                        <div className="w-full max-w-[200px] h-1.5 bg-slate-700 rounded-full mt-4 overflow-hidden">
+                                            <div 
+                                                className="h-full bg-indigo-500 rounded-full transition-all duration-300 ease-out"
+                                                style={{ width: `${progress}%` }}
+                                            ></div>
+                                        </div>
                                     </div>
                                 ) : (
-                                    <>
-                                        <PhotoIcon className="w-12 h-12 mx-auto mb-2 opacity-50" />
-                                        <p>Result will appear here</p>
-                                    </>
+                                    <div className="flex flex-col items-center">
+                                        <PhotoIcon className="w-16 h-16 mx-auto mb-4 opacity-40" />
+                                        <h4 className="text-lg font-medium text-slate-300 mb-1">No Result Yet</h4>
+                                        <p className="text-sm text-slate-500">Processed image will appear here</p>
+                                    </div>
                                 )}
                             </div>
                         )}
