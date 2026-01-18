@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { NavLink, useNavigate, useLocation } from 'react-router-dom';
 import { 
   HomeIcon, 
   IdentificationIcon, 
-  UserPlusIcon, 
-  PhotoIcon, 
+  UserPlusIcon,
+  PhotoIcon,
   ArrowRightOnRectangleIcon,
   Bars3Icon,
   XMarkIcon
@@ -14,6 +14,16 @@ const Navbar = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  // Handle scroll effect
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -33,100 +43,141 @@ const Navbar = () => {
   ];
 
   return (
-    <nav className="bg-white shadow-md sticky top-0 z-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between h-16">
-          <div className="flex">
-            <div className="shrink-0 flex items-center cursor-pointer" onClick={() => navigate('/dashboard')}>
-                <span className="text-xl font-bold bg-linear-to-r from-indigo-600 to-pink-600 bg-clip-text text-transparent">
+    <>
+      <div className={`fixed top-0 left-0 right-0 z-50 flex justify-center transition-all duration-300 ${scrolled ? 'pt-4' : 'pt-6'}`}>
+        <nav 
+          className={`
+            mx-4 w-full max-w-7xl rounded-2xl border border-white/10 
+            bg-slate-900/90 backdrop-blur-md shadow-lg shadow-black/40 backdrop-saturate-150
+            transition-all duration-300 ${scrolled ? 'py-2 px-4' : 'py-3 px-6'}
+          `}
+        >
+          <div className="flex justify-between items-center">
+            {/* Logo */}
+            <div 
+              className="flex items-center cursor-pointer group" 
+              onClick={() => navigate('/dashboard')}
+            >
+              <div className="relative">
+                <div className="absolute -inset-1 bg-linear-to-r from-indigo-500 to-pink-500 rounded-full blur opacity-25 group-hover:opacity-75 transition duration-200"></div>
+                <span className="relative text-xl font-bold bg-linear-to-r from-indigo-400 to-pink-400 bg-clip-text text-transparent">
                   SmartApp
                 </span>
+              </div>
             </div>
-            <div className="hidden md:ml-6 md:flex md:space-x-8">
+
+            {/* Desktop Navigation - HIDDEN */}
+            <div className="hidden space-x-1">
               {navItems.map((item) => (
                 <NavLink
                   key={item.name}
                   to={item.path}
                   className={({ isActive }) =>
-                    `inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium transition-colors duration-200 ${
+                    `relative px-4 py-2 rounded-xl text-sm font-medium transition-all duration-300 group ${
                       isActive
-                        ? 'border-indigo-500 text-indigo-600'
-                        : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'
+                        ? 'text-white bg-white/10 shadow-inner'
+                        : 'text-slate-300 hover:text-white hover:bg-white/5'
                     }`
                   }
                 >
-                  <item.icon className="h-5 w-5 mr-1.5" aria-hidden="true" />
-                  {item.name}
+                  <div className="flex items-center space-x-2">
+                    <item.icon className="h-4 w-4" aria-hidden="true" />
+                    <span>{item.name}</span>
+                  </div>
                 </NavLink>
               ))}
             </div>
-          </div>
-          
-          <div className="hidden md:flex items-center">
-            <button
-              onClick={handleLogout}
-              className="ml-4 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-lg text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-all shadow-md hover:shadow-lg"
-            >
-              <ArrowRightOnRectangleIcon className="h-5 w-5 mr-1.5" />
-              Logout
-            </button>
-          </div>
 
-          <div className="-mr-2 flex items-center md:hidden">
-            <button
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500"
-            >
-              <span className="sr-only">Open main menu</span>
-              {isMobileMenuOpen ? (
-                <XMarkIcon className="block h-6 w-6" aria-hidden="true" />
-              ) : (
-                <Bars3Icon className="block h-6 w-6" aria-hidden="true" />
-              )}
-            </button>
+            {/* Desktop Right Side - HIDDEN */}
+            <div className="hidden items-center">
+              <button
+                onClick={handleLogout}
+                className="ml-4 flex items-center px-4 py-2 text-sm font-medium rounded-xl text-white bg-indigo-600 hover:bg-indigo-500 transition-all duration-200 shadow-lg shadow-indigo-500/20 hover:shadow-indigo-500/40 transform hover:-translate-y-0.5 active:translate-y-0"
+              >
+                <ArrowRightOnRectangleIcon className="h-4 w-4 mr-2" />
+                Logout
+              </button>
+            </div>
+
+            {/* Mobile Menu Button - VISIBLE ALWAYS */}
+            <div className="flex items-center">
+              <button
+                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                className="inline-flex items-center justify-center p-2 rounded-xl text-slate-300 hover:text-white hover:bg-white/10 transition-colors"
+              >
+                {isMobileMenuOpen ? (
+                  <XMarkIcon className="block h-6 w-6" />
+                ) : (
+                  <Bars3Icon className="block h-6 w-6" />
+                )}
+              </button>
+            </div>
           </div>
-        </div>
+        </nav>
       </div>
 
-      {/* Mobile menu */}
-      {isMobileMenuOpen && (
-        <div className="md:hidden bg-white border-b border-gray-200">
-          <div className="pt-2 pb-3 space-y-1">
+      {/* Mobile Menu Backdrop */}
+      <div 
+        className={`fixed inset-0 bg-black/60 z-[60] backdrop-blur-sm transition-opacity duration-300 ${
+          isMobileMenuOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
+        }`}
+        onClick={() => setIsMobileMenuOpen(false)}
+      />
+
+      {/* Mobile Menu Drawer (Right Side) */}
+      <div 
+        className={`fixed top-0 right-0 h-full w-72 bg-slate-900/95 backdrop-blur-xl border-l border-white/10 shadow-2xl z-[70] transform transition-transform duration-300 ease-in-out ${
+          isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
+        }`}
+      >
+        <div className="flex flex-col h-full p-6">
+          <div className="flex justify-between items-center mb-8">
+            <span className="text-xl font-bold bg-linear-to-r from-indigo-400 to-pink-400 bg-clip-text text-transparent">
+              Menu
+            </span>
+            <button 
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="p-2 rounded-lg text-slate-400 hover:text-white hover:bg-white/10 transition-colors"
+            >
+              <XMarkIcon className="h-6 w-6" />
+            </button>
+          </div>
+
+          <div className="space-y-2 flex-1">
             {navItems.map((item) => (
               <NavLink
                 key={item.name}
                 to={item.path}
                 onClick={() => setIsMobileMenuOpen(false)}
                 className={({ isActive }) =>
-                  `block pl-3 pr-4 py-2 border-l-4 text-base font-medium ${
+                  `flex items-center px-4 py-3 rounded-xl text-base font-medium transition-all duration-200 ${
                     isActive
-                      ? 'bg-indigo-50 border-indigo-500 text-indigo-700'
-                      : 'border-transparent text-gray-600 hover:bg-gray-50 hover:border-gray-300 hover:text-gray-800'
+                      ? 'bg-indigo-500/20 text-indigo-300 border border-indigo-500/30'
+                      : 'text-slate-300 hover:bg-white/5 hover:text-white border border-transparent'
                   }`
                 }
               >
-                <div className="flex items-center">
-                  <item.icon className="h-5 w-5 mr-3" aria-hidden="true" />
-                  {item.name}
-                </div>
+                <item.icon className="h-5 w-5 mr-3" />
+                {item.name}
               </NavLink>
             ))}
-            <div className="pt-4 pb-3 border-t border-gray-200">
-                <button
-                onClick={() => {
-                  handleLogout();
-                  setIsMobileMenuOpen(false);
-                }}
-                className="w-full flex items-center pl-3 pr-4 py-2 border-l-4 border-transparent text-base font-medium text-red-600 hover:bg-red-50 hover:border-red-500 transition-colors"
-              >
-                <ArrowRightOnRectangleIcon className="h-5 w-5 mr-3" />
-                Logout
-              </button>
-            </div>
+          </div>
+
+          <div className="pt-6 border-t border-white/10">
+            <button
+              onClick={() => {
+                handleLogout();
+                setIsMobileMenuOpen(false);
+              }}
+              className="w-full flex items-center justify-center px-4 py-3 rounded-xl text-base font-medium text-white bg-red-500/80 hover:bg-red-500 transition-all duration-200 shadow-lg shadow-red-500/20"
+            >
+              <ArrowRightOnRectangleIcon className="h-5 w-5 mr-2" />
+              Logout
+            </button>
           </div>
         </div>
-      )}
-    </nav>
+      </div>
+    </>
   );
 };
 

@@ -98,21 +98,21 @@ function AddStudent() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 p-4 md:p-8 pt-8 relative">
-      <div className="max-w-xl mx-auto">
+    <div className="flex flex-col items-center p-4 md:p-8 relative">
+      <div className="max-w-xl w-full">
         <div className="text-center space-y-2 mb-8">
-          <h1 className="text-3xl font-bold bg-linear-to-r from-indigo-600 to-violet-600 bg-clip-text text-transparent">
+          <h1 className="text-3xl font-bold bg-linear-to-r from-indigo-400 to-violet-400 bg-clip-text text-transparent">
             {id ? "Edit Student" : "Add New Student"}
           </h1>
-          <p className="text-slate-500">
+          <p className="text-slate-400">
             {id ? "Update student details" : "Enter student details to register them in the system"}
           </p>
         </div>
 
-        <div className="bg-white p-8 rounded-2xl shadow-sm border border-slate-100">
+        <div className="bg-slate-800/50 backdrop-blur-md p-8 rounded-2xl shadow-lg border border-white/10">
           <form onSubmit={handleSubmit} className="space-y-6">
             <div className="space-y-2">
-              <label htmlFor="name" className="text-sm font-medium text-slate-700 flex items-center gap-2">
+              <label htmlFor="name" className="text-sm font-medium text-slate-300 flex items-center gap-2">
                 <UserIcon className="w-4 h-4 text-slate-400" />
                 Full Name
               </label>
@@ -123,13 +123,13 @@ function AddStudent() {
                 value={formData.name}
                 onChange={handleChange}
                 placeholder="Ex. John Doe"
-                className="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 outline-none transition-all placeholder:text-slate-300 text-gray-900 bg-white"
+                className="w-full px-4 py-2.5 rounded-xl border border-slate-600 bg-slate-900/50 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 outline-none transition-all placeholder:text-slate-600 text-white"
               />
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div className="space-y-2">
-                <label htmlFor="age" className="text-sm font-medium text-slate-700 flex items-center gap-2">
+                <label htmlFor="age" className="text-sm font-medium text-slate-300 flex items-center gap-2">
                   <CalendarIcon className="w-4 h-4 text-slate-400" />
                   Age
                 </label>
@@ -140,12 +140,12 @@ function AddStudent() {
                   value={formData.age}
                   onChange={handleChange}
                   placeholder="Ex. 20"
-                  className="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 outline-none transition-all placeholder:text-slate-300 text-gray-900 bg-white"
+                  className="w-full px-4 py-2.5 rounded-xl border border-slate-600 bg-slate-900/50 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 outline-none transition-all placeholder:text-slate-600 text-white"
                 />
               </div>
 
               <div className="space-y-2">
-                <label htmlFor="course" className="text-sm font-medium text-slate-700 flex items-center gap-2">
+                <label htmlFor="course" className="text-sm font-medium text-slate-300 flex items-center gap-2">
                   <AcademicCapIcon className="w-4 h-4 text-slate-400" />
                   Course
                 </label>
@@ -156,7 +156,7 @@ function AddStudent() {
                   value={formData.course}
                   onChange={handleChange}
                   placeholder="Ex. B.Tech"
-                  className="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 outline-none transition-all placeholder:text-slate-300 text-gray-900 bg-white"
+                  className="w-full px-4 py-2.5 rounded-xl border border-slate-600 bg-slate-900/50 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 outline-none transition-all placeholder:text-slate-600 text-white"
                 />
               </div>
             </div>
@@ -165,8 +165,8 @@ function AddStudent() {
               <div
                 className={`p-4 rounded-xl text-sm font-medium flex items-center gap-2 ${
                   message.type === "success"
-                    ? "bg-emerald-50 text-emerald-600"
-                    : "bg-red-50 text-red-600"
+                    ? "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20"
+                    : "bg-red-500/10 text-red-400 border border-red-500/20"
                 }`}
               >
                 {message.type === "success" ? (
@@ -183,8 +183,8 @@ function AddStudent() {
               disabled={loading}
               className={`w-full py-3 px-4 rounded-xl flex items-center justify-center gap-2 font-semibold text-white transition-all transform active:scale-95 ${
                 loading
-                  ? "bg-slate-300 cursor-not-allowed"
-                  : "bg-linear-to-r from-indigo-600 to-violet-600 hover:shadow-lg hover:shadow-indigo-200"
+                  ? "bg-slate-700 cursor-not-allowed text-slate-500"
+                  : "bg-linear-to-r from-indigo-600 to-violet-600 hover:shadow-lg hover:shadow-indigo-500/20"
               }`}
             >
               {loading ? (
@@ -203,12 +203,12 @@ function AddStudent() {
         </div>
 
         {/* Student List Section */}
-        <div className="mt-12 bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
-          <div className="p-6 border-b border-slate-100 flex justify-between items-center bg-slate-50/50">
-            <h2 className="text-xl font-bold text-slate-800">Registered Students</h2>
+        <div className="mt-12 bg-slate-800/50 backdrop-blur-md rounded-2xl shadow-lg border border-white/10 overflow-hidden">
+          <div className="p-6 border-b border-white/10 flex justify-between items-center bg-slate-900/30">
+            <h2 className="text-xl font-bold text-white">Registered Students</h2>
             <button 
                 onClick={fetchStudents} 
-                className="text-sm text-indigo-600 hover:text-indigo-800 font-medium px-3 py-1.5 rounded-lg hover:bg-indigo-50 transition-colors"
+                className="text-sm text-indigo-400 hover:text-indigo-300 font-medium px-3 py-1.5 rounded-lg hover:bg-indigo-500/10 transition-colors"
             >
                 Refresh List
             </button>
@@ -216,44 +216,44 @@ function AddStudent() {
           
           <div className="overflow-x-auto">
             {students.length === 0 ? (
-              <div className="p-12 text-center text-slate-400">
+              <div className="p-12 text-center text-slate-500">
                 No students registered yet.
               </div>
             ) : (
               <table className="w-full text-left border-collapse">
                 <thead>
-                  <tr className="bg-slate-50/50 text-slate-500 text-sm uppercase tracking-wider">
-                    <th className="p-4 font-semibold rounded-tl-lg">Name</th>
+                  <tr className="bg-slate-900/50 text-slate-400 text-sm uppercase tracking-wider">
+                    <th className="p-4 font-semibold">Name</th>
                     <th className="p-4 font-semibold">Age</th>
                     <th className="p-4 font-semibold">Course</th>
-                    <th className="p-4 font-semibold rounded-tr-lg">Actions</th>
+                    <th className="p-4 font-semibold text-right">Actions</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-slate-50">
+                <tbody className="divide-y divide-white/5">
                   {students.map((student) => (
-                    <tr key={student._id || student.id} className="hover:bg-indigo-50/30 transition-colors">
-                      <td className="p-4 font-medium text-slate-900">{student.name}</td>
-                      <td className="p-4 text-slate-600">{student.age}</td>
-                      <td className="p-4 text-slate-600">
-                        <span className="bg-indigo-50 text-indigo-700 px-2.5 py-1 rounded-md text-xs font-semibold border border-indigo-100">
+                    <tr key={student._id || student.id} className="hover:bg-white/5 transition-colors group">
+                      <td className="p-4 font-medium text-slate-200">{student.name}</td>
+                      <td className="p-4 text-slate-400">{student.age}</td>
+                      <td className="p-4 text-slate-400">
+                        <span className="bg-indigo-500/10 text-indigo-400 px-2.5 py-1 rounded-md text-xs font-semibold border border-indigo-500/20">
                           {student.course}
                         </span>
                       </td>
-                      <td className="p-4">
-                        <div className="flex gap-2">
+                      <td className="p-4 text-right">
+                        <div className="flex gap-2 justify-end">
                           <button 
                             onClick={() => {
                                 navigate(`/edit-student/${student._id || student.id}`);
                                 window.scrollTo({ top: 0, behavior: 'smooth' });
                             }}
-                            className="p-2 text-indigo-600 hover:bg-indigo-50 rounded-lg transition-colors"
+                            className="p-2 text-indigo-400 hover:bg-indigo-500/10 rounded-lg transition-colors"
                             title="Edit"
                           >
                             <PencilSquareIcon className="w-5 h-5" />
                           </button>
                           <button 
                             onClick={() => handleDelete(student._id || student.id)}
-                            className="p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                            className="p-2 text-red-400 hover:bg-red-500/10 rounded-lg transition-colors"
                             title="Delete"
                           >
                             <TrashIcon className="w-5 h-5" />

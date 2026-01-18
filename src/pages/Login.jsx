@@ -56,6 +56,7 @@ function Login() {
           </div>
           
           <p className="text-white/70 text-sm mt-2">Sign in to continue to your dashboard</p>
+          {isWakingUp && <p className="text-amber-300 text-xs mt-1 animate-pulse">Waking up server...</p>}
         </div>
 
         <form onSubmit={handleLogin} className="space-y-6">
