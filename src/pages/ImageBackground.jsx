@@ -228,9 +228,9 @@ const ImageBackground = () => {
                 {/* Original */}
                 <div className="flex flex-col gap-3">
                     <h3 className="text-lg font-semibold text-slate-300 border-b border-slate-700 pb-2">Original Image</h3>
-                    <div className="aspect-square bg-slate-800/50 rounded-xl border-2 border-dashed border-slate-600 flex items-center justify-center overflow-hidden relative group">
+                    <div className="w-full min-h-[400px] bg-slate-800/50 rounded-xl border-2 border-dashed border-slate-600 flex items-center justify-center overflow-hidden relative group">
                         {previewUrl ? (
-                            <img src={previewUrl} alt="Original" className="w-full h-full object-contain" />
+                            <img src={previewUrl} alt="Original" className="max-w-full max-h-[500px] w-auto h-auto object-contain" />
                         ) : (
                             <div className="text-slate-500 text-center p-4">
                                 <PhotoIcon className="w-12 h-12 mx-auto mb-2 opacity-50" />
@@ -243,10 +243,10 @@ const ImageBackground = () => {
                 {/* Processed */}
                 <div className="flex flex-col gap-3">
                     <h3 className="text-lg font-semibold text-slate-300 border-b border-slate-700 pb-2">Processed Result</h3>
-                    <div className="aspect-square bg-slate-800 rounded-xl border border-slate-700 shadow-inner flex items-center justify-center overflow-hidden relative">
+                    <div className="w-full min-h-[400px] bg-slate-800 rounded-xl border border-slate-700 shadow-inner flex items-center justify-center overflow-hidden relative">
                          {processedImage ? (
-                            <div className="relative w-full h-full">
-                                <img src={processedImage} alt="Processed" className="w-full h-full object-contain" />
+                            <div className="relative flex justify-center w-full">
+                                <img src={processedImage} alt="Processed" className="max-w-full max-h-[500px] w-auto h-auto object-contain" />
                             </div>
                         ) : (
                             <div className="text-slate-500 text-center p-4 w-full h-full flex items-center justify-center">
